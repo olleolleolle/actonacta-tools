@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 import urllib2
 from BeautifulSoup import BeautifulSoup, HTMLParseError
-import mwclient
 from StringIO import StringIO as io
+from wikitools import wiki
+from wikitools import category
 
 #page = urllib2.urlopen("http://www.europarl.europa.eu/sides/getDoc.do?pubRef=-//EP//TEXT+TA+P7-TA-2010-0058+0+DOC+XML+V0//EN&language=EN")
 page = urllib2.urlopen("file:///Users/olle/Desktop/acta.html")
@@ -23,9 +24,12 @@ s += unicode(headlineText) + u"\n"
 for piece in soup.find('tr', attrs={'class':'contents'}).next:
     s += unicode(piece).strip()
 
-print s
+#print s
 
-# TODO: Encode that string, to be able to save it here.
-# fd = open("/Users/olle/opensource/python/actonacta-tools/acta-out.html", "rw")
-# fd.write(u)
-# fd.close()
+# TODO: Login!
+site = wiki.Wiki("http://euwiki.org/api.php")
+cat = category.Category(site, "Foo") # Create object for "Category:Foo"
+# iterate through all the pages in ns 0
+for article in cat.getAllMembersGen(namespaces=[0]):    
+    article.edit(prependtext=s) # edit each page
+
