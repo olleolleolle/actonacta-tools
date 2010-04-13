@@ -1,1 +1,3 @@
-wiki : login and Edit pages
+TODO:
+
+wiki publishing: Login as a user, and Edit pages

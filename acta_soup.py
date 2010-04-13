@@ -19,17 +19,17 @@ headline = titleBlock.find('td', attrs={"align":"left", "valign":"top"})
 headLineText = headline.next.next.next.next
 headlineText = headLineText.strip()
 
-s = u''
-s += unicode(headlineText) + u"\n"
+pageContents = u''
+pageContents += unicode(headlineText) + u"\n"
 for piece in soup.find('tr', attrs={'class':'contents'}).next:
-    s += unicode(piece).strip()
+    pageContents += unicode(piece).strip()
 
-#print s
+#print pageContents
 
 # TODO: Login!
 site = wiki.Wiki("http://euwiki.org/api.php")
 cat = category.Category(site, "Foo") # Create object for "Category:Foo"
 # iterate through all the pages in ns 0
-for article in cat.getAllMembersGen(namespaces=[0]):    
-    article.edit(prependtext=s) # edit each page
+for article in cat.getAllMembersGen(namespaces=[0]):
+    article.edit(prependtext=pageContents) # edit each page
 

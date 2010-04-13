@@ -1,0 +1,5 @@
+reqs:
+
+sudo easy_install pip
+sudo pip install BeautifulSoup
+sudo pip install wikitools
