@@ -1,7 +1,9 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import urllib2
 from BeautifulSoup import BeautifulSoup, HTMLParseError
 import mwclient
+from StringIO import StringIO as io
 
 #page = urllib2.urlopen("http://www.europarl.europa.eu/sides/getDoc.do?pubRef=-//EP//TEXT+TA+P7-TA-2010-0058+0+DOC+XML+V0//EN&language=EN")
 page = urllib2.urlopen("file:///Users/olle/Desktop/acta.html")
@@ -16,13 +18,14 @@ headline = titleBlock.find('td', attrs={"align":"left", "valign":"top"})
 headLineText = headline.next.next.next.next
 headlineText = headLineText.strip()
 
-print headlineText
+s = u''
+s += unicode(headlineText) + u"\n"
+for piece in soup.find('tr', attrs={'class':'contents'}).next:
+    s += unicode(piece).strip()
 
+print s
 
-contentBox = soup.findAll('tr', attrs={'class':'contents'})
-
-for piece in contentBox:
-#      #where, linebreak, what = incident.contents[:3]
-#      # print where.strip()
-#      # print what.strip()
-      print unicode(piece.next).strip()
+# TODO: Encode that string, to be able to save it here.
+# fd = open("/Users/olle/opensource/python/actonacta-tools/acta-out.html", "rw")
+# fd.write(u)
+# fd.close()
